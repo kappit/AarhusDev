@@ -1,0 +1,63 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Home>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+	Layout = "Master.cshtml";
+}
+
+@Umbraco.Field("mainContent")
+
+
+<div class="row">
+    <div class="col">
+        
+        @{ var selectionArticles = Model.Content.Site().FirstChild("articleMain").Children().Where(x => x.IsVisible()).ToArray(); }
+
+@if (selectionArticles.Length > 0)
+{
+<h3>Recent articles</h3>
+        for(var i = 0; i < 2; i++)
+        {
+        var item = selectionArticles[i];
+            <div class="card">
+              <div class="card-body">
+                <a href="@item.Url">
+                    <h5 class="card-title">@item.Name</h5>
+                </a>
+                <h6 class="card-subtitle mb-2 text-muted">Published: @item.UpdateDate</h6>
+                <p class="card-text">@Umbraco.Field("bodyText")</p>
+                <a href="@item.Url">Go to article</a>
+              </div>
+            </div>
+            <br>
+        }
+}
+        
+    </div>
+    <div class="col">
+        
+                @{ var selectionProjects = Model.Content.Site().FirstChild("projectsMain").Children().Where(x => x.IsVisible()).OrderBy("CreateDate desc").ToArray(); }
+
+@if (selectionProjects.Length > 0)
+{
+<h3>Recent projects</h3>
+        for(var i = 0; i < 2; i++)
+        
+        {
+        var item = selectionProjects[i];
+            <div class="card">
+              <div class="card-body">
+                <a href="@item.Url">
+                    <h5 class="card-title">@item.Name</h5>
+                    
+                </a>
+                <h6 class="card-subtitle mb-2 text-muted">Published: @item.UpdateDate</h6>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="@item.Url">Go to article</a>
+              </div>
+            </div>
+            <br>
+        }
+}
+        
+    </div>
+</div>

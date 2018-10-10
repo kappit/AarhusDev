@@ -1,0 +1,37 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Members>
+    @using ContentModels = Umbraco.Web.PublishedContentModels;
+    @{
+    Layout = "Master.cshtml";
+
+    var memberService = ApplicationContext.Current.Services.MemberService;
+
+    var activeMembers = memberService.GetMembersByGroup("Active");
+    var prospectMembers = memberService.GetMembersByGroup("Prospect");
+
+    }
+    <h2>Active members</h2>
+    <div class="row">
+    @foreach(var Member in activeMembers) {
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@Member.GetValue("firstname") @Member.GetValue("lastname")</h5>
+                    <p class="card-text">@Member.GetValue("address")</p>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+    <h2>Prospect members</h2>
+    <div class="row">
+        @foreach(var Prospect in prospectMembers) {
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@Prospect.GetValue("firstname") @Prospect.GetValue("lastname")</h5>
+                    <p class="card-text">@Prospect.GetValue("address")</p>
+                </div>
+            </div>
+        </div>
+        }
+    </div>

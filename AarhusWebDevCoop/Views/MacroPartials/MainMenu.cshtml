@@ -1,0 +1,62 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using Umbraco.Web
+
+
+@*
+    This snippet makes a list of links to the of children of the current page using an unordered HTML list.
+
+    How it works:
+    - It uses the Children method to get all child pages
+    - It then generates links so the visitor can go to each page
+*@
+
+
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+      <a class="navbar-brand" href="@Model.Content.Site().Url">
+      <img src="~/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+      OverclockingFTW.org
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample04">
+          @{ var selection = Model.Content.Site().Children.Where(x => x.IsVisible()).ToArray(); }
+
+            @if (selection.Length > 0)
+            {
+               <ul class="navbar-nav mr-auto">
+                    @foreach (var item in selection)
+                    {
+                        <li class="nav-item @(item.IsAncestorOrSelf(Model.Content) ? "active" : null)">
+                            <a class="nav-link" href="@item.Url">@item.Name</a>
+                        </li>
+                    }
+                </ul>
+            }
+            
+            <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Select project
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                 @{ var selectionProjects = Model.Content.Site().FirstChild("projectsMain")
+                 .Children().Where(x => x.IsVisible())
+                 .Where(x => x.GetPropertyValue<String>("status") == "Completed"); } 
+                    @if (selection.Length > 0)
+                    {
+                     foreach (var item in selectionProjects)
+                    {
+                         <a class="dropdown-item" href="@item.Url">@item.Name</a>
+                    }
+                    }
+              
+              </div>
+            </div>
+
+  
+        <form class="form-inline my-2 my-md-0">
+          <input class="form-control" type="text" placeholder="Search">
+        </form>
+      </div>
+    </nav>

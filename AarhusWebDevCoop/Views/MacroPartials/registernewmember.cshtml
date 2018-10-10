@@ -1,0 +1,71 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+
+@using System.Web.Mvc.Html
+@using ClientDependency.Core.Mvc
+@using Umbraco.Web
+@using Umbraco.Web.Models
+@using Umbraco.Web.Controllers
+
+@{
+
+    var registerModel = Members.CreateRegistrationModel("ProspectMemberType");
+    
+  
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+    Html.RequiresJs("/umbraco_client/ui/jquery.js");
+    Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.min.js");
+    Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.unobtrusive.min.js");
+    
+    var success = TempData["FormSuccess"] != null;
+}
+
+@*NOTE: This RenderJsHere code should be put on your main template page where the rest of your script tags are placed*@
+@Html.RenderJsHere()
+
+@if (success)
+{
+var m = Membership.GetUser();
+var memberService = ApplicationContext.Current.Services.MemberService;
+var member = memberService.GetByEmail(m.Email);
+ApplicationContext.Current.Services.MemberService.AssignRole((int)m.ProviderUserKey, "ProspectMemberType");
+<p>Registration succeeeded.</p>
+<p>Logged in with @m.Email</p>
+} else {
+
+    using (Html.BeginUmbracoForm<UmbRegisterController>("HandleRegisterMember"))
+    {
+        <fieldset>
+            <legend>Login</legend>
+
+            @Html.ValidationSummary("registerModel", true)
+            <div class="form-group">
+                <div class="col-sm-6">
+                    @Html.LabelFor(m => registerModel.Username)
+                    @Html.TextBoxFor(m => registerModel.Username, new { @class = "form-control", placeholder = "Username" })
+                    @Html.ValidationMessageFor(m => registerModel.Username)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    @Html.LabelFor(m => registerModel.Email)
+                    @Html.TextBoxFor(m => registerModel.Email, new { @class = "form-control", placeholder = "Email" })
+                    @Html.ValidationMessageFor(m => registerModel.Email)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    @Html.LabelFor(m => registerModel.Password)
+                    @Html.PasswordFor(m => registerModel.Password, new { @class = "form-control", placeholder = "Password" })
+                    @Html.ValidationMessageFor(m => registerModel.Password)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <button class="btn btn-primary input-medium pull-left">Login</button>
+                </div>
+            </div>
+        </fieldset>
+     }
+}

@@ -29,7 +29,7 @@
 var m = Membership.GetUser();
 var memberService = ApplicationContext.Current.Services.MemberService;
 var member = memberService.GetByEmail(m.Email);
-ApplicationContext.Current.Services.MemberService.AssignRole((int)m.ProviderUserKey, "ProspectMemberType");
+ApplicationContext.Current.Services.MemberService.AssignRole((int)m.ProviderUserKey, "Prospect");
 <p>Registration succeeeded.</p>
 <p>Logged in with @m.Email</p>
 } else {
@@ -37,33 +37,41 @@ ApplicationContext.Current.Services.MemberService.AssignRole((int)m.ProviderUser
     using (Html.BeginUmbracoForm<UmbRegisterController>("HandleRegisterMember"))
     {
         <fieldset>
-            <legend>Login</legend>
+            <legend>Register</legend>
 
             @Html.ValidationSummary("registerModel", true)
             <div class="form-group">
                 <div class="col-sm-6">
-                    @Html.LabelFor(m => registerModel.Username)
                     @Html.TextBoxFor(m => registerModel.Username, new { @class = "form-control", placeholder = "Username" })
                     @Html.ValidationMessageFor(m => registerModel.Username)
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-6">
-                    @Html.LabelFor(m => registerModel.Email)
                     @Html.TextBoxFor(m => registerModel.Email, new { @class = "form-control", placeholder = "Email" })
                     @Html.ValidationMessageFor(m => registerModel.Email)
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-6">
-                    @Html.LabelFor(m => registerModel.Password)
                     @Html.PasswordFor(m => registerModel.Password, new { @class = "form-control", placeholder = "Password" })
                     @Html.ValidationMessageFor(m => registerModel.Password)
                 </div>
             </div>
+            @if(registerModel.MemberProperties != null) {
+                for (var i = 0; i < registerModel.MemberProperties.Count; i++)
+                {
             <div class="form-group">
                 <div class="col-sm-6">
-                    <button class="btn btn-primary input-medium pull-left">Login</button>
+                    @Html.TextBoxFor(m => registerModel.MemberProperties[i].Value, new { @class = "form-control", placeholder = registerModel.MemberProperties[i].Name })
+                    @Html.HiddenFor(m => registerModel.MemberProperties[i].Alias)
+                </div>
+            </div>
+                }
+            }
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <button class="btn btn-primary input-medium pull-left">Register</button>
                 </div>
             </div>
         </fieldset>

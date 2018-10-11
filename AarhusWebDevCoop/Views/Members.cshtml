@@ -6,7 +6,8 @@
     var memberService = ApplicationContext.Current.Services.MemberService;
 
     var activeMembers = memberService.GetMembersByGroup("Active");
-    var prospectMembers = memberService.GetMembersByGroup("Prospect");
+    var prospectMembers = memberService.GetMembersByGroup("ProspectMemberType");
+    var members = memberService.GetMembersByGroup("Members");
 
     }
     <h2>Active members</h2>
@@ -16,6 +17,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">@Member.GetValue("firstname") @Member.GetValue("lastname")</h5>
+                    <strong>Adresse:</strong>
                     <p class="card-text">@Member.GetValue("address")</p>
                 </div>
             </div>
@@ -29,7 +31,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">@Prospect.GetValue("firstname") @Prospect.GetValue("lastname")</h5>
-                    <p class="card-text">@Prospect.GetValue("address")</p>
+                    <strong>Mobile:</strong> <p class="card-text">@Prospect.GetValue("mobile")</p>
                 </div>
             </div>
         </div>

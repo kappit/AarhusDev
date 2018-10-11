@@ -19,8 +19,8 @@ using Umbraco.ModelsBuilder;
 using Umbraco.ModelsBuilder.Umbraco;
 
 [assembly: PureLiveAssembly]
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "a47b90dee3811a0f")]
-[assembly:System.Reflection.AssemblyVersion("0.0.0.5")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "828c60a2a337db99")]
+[assembly:System.Reflection.AssemblyVersion("0.0.0.3")]
 
 namespace Umbraco.Web.PublishedContentModels
 {
@@ -658,113 +658,6 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 	}
 
-	/// <summary>Member</summary>
-	[PublishedContentModel("Member")]
-	public partial class Member : PublishedContentModel
-	{
-#pragma warning disable 0109 // new is redundant
-		public new const string ModelTypeAlias = "Member";
-		public new const PublishedItemType ModelItemType = PublishedItemType.Member;
-#pragma warning restore 0109
-
-		public Member(IPublishedContent content)
-			: base(content)
-		{ }
-
-#pragma warning disable 0109 // new is redundant
-		public new static PublishedContentType GetModelContentType()
-		{
-			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
-		}
-#pragma warning restore 0109
-
-		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Member, TValue>> selector)
-		{
-			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
-		}
-
-		///<summary>
-		/// Is Approved
-		///</summary>
-		[ImplementPropertyType("umbracoMemberApproved")]
-		public bool UmbracoMemberApproved
-		{
-			get { return this.GetPropertyValue<bool>("umbracoMemberApproved"); }
-		}
-
-		///<summary>
-		/// Comments
-		///</summary>
-		[ImplementPropertyType("umbracoMemberComments")]
-		public string UmbracoMemberComments
-		{
-			get { return this.GetPropertyValue<string>("umbracoMemberComments"); }
-		}
-
-		///<summary>
-		/// Failed Password Attempts
-		///</summary>
-		[ImplementPropertyType("umbracoMemberFailedPasswordAttempts")]
-		public string UmbracoMemberFailedPasswordAttempts
-		{
-			get { return this.GetPropertyValue<string>("umbracoMemberFailedPasswordAttempts"); }
-		}
-
-		///<summary>
-		/// Last Lockout Date
-		///</summary>
-		[ImplementPropertyType("umbracoMemberLastLockoutDate")]
-		public string UmbracoMemberLastLockoutDate
-		{
-			get { return this.GetPropertyValue<string>("umbracoMemberLastLockoutDate"); }
-		}
-
-		///<summary>
-		/// Last Login Date
-		///</summary>
-		[ImplementPropertyType("umbracoMemberLastLogin")]
-		public string UmbracoMemberLastLogin
-		{
-			get { return this.GetPropertyValue<string>("umbracoMemberLastLogin"); }
-		}
-
-		///<summary>
-		/// Last Password Change Date
-		///</summary>
-		[ImplementPropertyType("umbracoMemberLastPasswordChangeDate")]
-		public string UmbracoMemberLastPasswordChangeDate
-		{
-			get { return this.GetPropertyValue<string>("umbracoMemberLastPasswordChangeDate"); }
-		}
-
-		///<summary>
-		/// Is Locked Out
-		///</summary>
-		[ImplementPropertyType("umbracoMemberLockedOut")]
-		public bool UmbracoMemberLockedOut
-		{
-			get { return this.GetPropertyValue<bool>("umbracoMemberLockedOut"); }
-		}
-
-		///<summary>
-		/// Password Answer
-		///</summary>
-		[ImplementPropertyType("umbracoMemberPasswordRetrievalAnswer")]
-		public string UmbracoMemberPasswordRetrievalAnswer
-		{
-			get { return this.GetPropertyValue<string>("umbracoMemberPasswordRetrievalAnswer"); }
-		}
-
-		///<summary>
-		/// Password Question
-		///</summary>
-		[ImplementPropertyType("umbracoMemberPasswordRetrievalQuestion")]
-		public string UmbracoMemberPasswordRetrievalQuestion
-		{
-			get { return this.GetPropertyValue<string>("umbracoMemberPasswordRetrievalQuestion"); }
-		}
-	}
-
 	/// <summary>ActiveMemberType</summary>
 	[PublishedContentModel("memberType")]
 	public partial class MemberType : PublishedContentModel
@@ -936,15 +829,15 @@ namespace Umbraco.Web.PublishedContentModels
 	}
 
 	/// <summary>ProspectMemberType</summary>
-	[PublishedContentModel("prospectMemberType")]
-	public partial class ProspectMemberType : PublishedContentModel
+	[PublishedContentModel("Member")]
+	public partial class Member : PublishedContentModel
 	{
 #pragma warning disable 0109 // new is redundant
-		public new const string ModelTypeAlias = "prospectMemberType";
+		public new const string ModelTypeAlias = "Member";
 		public new const PublishedItemType ModelItemType = PublishedItemType.Member;
 #pragma warning restore 0109
 
-		public ProspectMemberType(IPublishedContent content)
+		public Member(IPublishedContent content)
 			: base(content)
 		{ }
 
@@ -955,7 +848,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 #pragma warning restore 0109
 
-		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<ProspectMemberType, TValue>> selector)
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<Member, TValue>> selector)
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
 		}

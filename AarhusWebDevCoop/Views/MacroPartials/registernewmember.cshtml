@@ -9,7 +9,7 @@
 
 @{
 
-    var registerModel = Members.CreateRegistrationModel("ProspectMemberType");
+    var registerModel = Members.CreateRegistrationModel("Member");
     
   
     Html.EnableClientValidation();
@@ -29,7 +29,7 @@
 var m = Membership.GetUser();
 var memberService = ApplicationContext.Current.Services.MemberService;
 var member = memberService.GetByEmail(m.Email);
-ApplicationContext.Current.Services.MemberService.AssignRole((int)m.ProviderUserKey, "Prospect");
+ApplicationContext.Current.Services.MemberService.AssignRole((int)m.ProviderUserKey, "ProspectMemberType");
 <p>Registration succeeeded.</p>
 <p>Logged in with @m.Email</p>
 } else {
